@@ -13,16 +13,14 @@ public:
     ListNode* reverseBetween(ListNode* head, int left, int right) {
         ListNode* dummy = new ListNode();
         dummy->next = head;
-        ListNode* leftprev = dummy; 
-        ListNode* curr = head;
-        for(int i = 1; i < left; i++)
+        ListNode* curr = head, *leftprev = dummy;
+        for(int i = 0; i < left-1;i++)
         {
             leftprev = curr;
             curr = curr->next;
-            // cout<<i<<endl;
         }
-        ListNode* prev = nullptr,*temp;
-        for(int i = 0; i < right - left + 1; i++)
+        ListNode* temp, *prev = nullptr;
+        for(int i = 0; i < right-left+1; i++)
         {
             temp = curr->next;
             curr->next = prev;
@@ -31,6 +29,7 @@ public:
         }
         leftprev->next->next = curr;
         leftprev->next = prev;
+        
         return dummy->next;
     }
 };
