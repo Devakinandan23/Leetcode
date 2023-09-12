@@ -1,13 +1,21 @@
 class Solution {
 public:
     int minDeletions(string s) {
-    int cnt[26] = {}, res = 0;
-    unordered_set<int> used;
-    for (char ch : s)
-        ++cnt[ch - 'a'];
-    for (int i = 0; i < 26; ++i)
-        for (; cnt[i] > 0 && !used.insert(cnt[i]).second; --cnt[i])
-            ++res;
-    return res;
-}
+        vector<int>freq(26,0);
+        for(auto x:s) freq[x - 'a']++;
+        sort(freq.begin(),freq.end());
+        int del = 0,prev;
+        for(int i = 24; i >= 0 ; i--)
+        {
+            if(freq[i] == 0) break;
+            if(freq[i] >= freq[i+1])
+            {
+                prev = freq[i];
+                freq[i] = max(0,freq[i+1]-1);
+                del += prev - freq[i];
+            }
+        }
+        
+        return del;
+    }
 };
